@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./Config/database.js"
 import userRoutes from "./Routes/User.routes.js"
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
 
@@ -11,11 +12,16 @@ dotenv.config({
 })
 
 connectDB();
+const corsOptions = {
+    origin : "http://localhost:5173",
+    credentials: true
+}
 
 // Middlewares
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors(corsOptions));
 
 // Api
 app.use(userRoutes);
